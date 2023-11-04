@@ -1,12 +1,11 @@
 //go:build itsybitsy_m4
-// +build itsybitsy_m4
 
 package main
 
 import (
 	"machine"
 
-	"github.com/aykevl/things/hub75"
+	"github.com/tinygo-org/things/hub75"
 )
 
 var display = hub75.New(hub75.Config{
