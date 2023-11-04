@@ -1,0 +1,81 @@
+tinygo keyboard
+https://github.com/sago35/tinygo-keyboard
+https://twitter.com/sago35tk/status/1666794192847380481?s=20
+
+Umeda.go
+TinyGo Keyboard Workshop
+https://sago35.hatenablog.com/entry/2023/05/18/225618
+
+u-root
+A fully Go userland with Linux bootloaders!
+https://github.com/u-root/u-root
+
+Yurii Soldak
+TinyGo RC airplane mod
+https://app.slack.com/client/T029RQSE6/CDJD3SUP6/thread/CDJD3SUP6-1680202580.943769?cdn_fallback=2
+
+Embedded Systems 101: SX1278 LoRa, Datasheets & SPI connection with TinyGo
+https://www.youtube.com/watch?v=_5XgtYkq2eo&ab_channel=PatWhitti
+
+
+"TinyGo - Going small on Microcontroller and WebAssembly" by Björn Pötzschke
+https://www.youtube.com/watch?v=5sz1fIcFuRc&ab_channel=NewStoreTechTalks
+
+Firewatch
+https://github.com/ManoloEvans/firewatch-sensor
+
+Department of Computer Sciences, Kaunas University of Technology, Lithuania
+Performance Evaluation of C/C++, MicroPython, Rust and TinyGo Programming Languages on ESP32 Microcontroller
+"The results of this study reveal that, though the C/C++ programming language is widely believed to be the most efficient for embedded programming, that is not always the case....in a few cases the C/C++ algorithms were outperformed by algorithms implemented in TinyGo and Rust. Moreover, the TinyGo algorithms demonstrated jitter-free execution, making this language more preferable for hard real-time applications."
+https://www.mdpi.com/2079-9292/12/1/143
+
+Fastly Compute SDK Go
+https://github.com/fastly/compute-sdk-go
+
+Capsule
+Philippe Charrière - @k33g
+https://github.com/bots-garden/capsule
+
+
+Spin
+https://www.thoughtworks.com/en-es/radar/platforms/spin
+
+
+AliBaba
+Higress - Next-generation Cloud Native Gateway | 下一代云原生网关
+https://github.com/alibaba/higress/
+
+wazero
+https://wazero.io/
+
+wzprof
+https://github.com/stealthrocket/wzprof
+
+kube scheduler WASM extension
+https://github.com/kubernetes-sigs/kube-scheduler-wasm-extension
+
+
+TinyGo earring-rings by @aykevl
+https://github.com/aykevl/things/tree/master/earring-ring
+
+gopher badge
+https://gopherbadge.com/
+
+
+Gophercon EU hardware hack session
+
+
+TinyGlobo 2 release
+
+
+
+
+nottinygc
+https://github.com/wasilibs/nottinygc
+
+Envoy - Go SDK for Proxy-Wasm
+https://github.com/tetratelabs/proxy-wasm-go-sdk
+
+
+
+
