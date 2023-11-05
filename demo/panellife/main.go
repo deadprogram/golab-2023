@@ -16,7 +16,7 @@ var (
 
 	height     uint32 = 32
 	width      uint32 = 32
-	population        = 55
+	population        = 25
 	gamebuffer []byte
 
 	black = color.RGBA{0, 0, 0, 255}
@@ -50,6 +50,8 @@ func main() {
 			animationFPS := int64(10 * time.Second / animationTime)
 			print("#", second, " screen=", newFullRefreshes-fullRefreshes, "fps animation=", animationTime.String(), "/", (animationFPS / 10), ".", animationFPS%10, "fps\r\n")
 			fullRefreshes = newFullRefreshes
+
+			println(universe.String())
 		}
 	}
 }
