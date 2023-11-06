@@ -19,7 +19,7 @@ var (
 	gamebuffers [][]byte
 
 	dead = color.RGBA{0, 0, 0, 255}
-	alive = color.RGBA{0, 255, 255, 255}
+	alive = color.RGBA{0, 255, 0, 255}
 )
 
 func main() {
