@@ -12,3 +12,6 @@ cubetest:
 
 panellife:
 	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/panellife/
+
+cubelife:
+	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/cubelife/
