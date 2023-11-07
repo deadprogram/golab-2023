@@ -13,12 +13,12 @@ var (
 	multirows  = 2
 	multicols  = 3
 
-	height     uint32 = 32
-	width      uint32 = 32
-	population        = 35
+	height      uint32 = 32
+	width       uint32 = 32
+	population         = 35
 	gamebuffers [][]byte
 
-	dead = color.RGBA{0, 0, 0, 255}
+	dead  = color.RGBA{0, 0, 0, 255}
 	alive = color.RGBA{0, 255, 0, 255}
 )
 
@@ -33,6 +33,7 @@ func main() {
 
 	fullRefreshes := uint(0)
 	previousSecond := int64(0)
+	restartTime := int64(0)
 
 	for {
 		start := time.Now()
@@ -43,7 +44,7 @@ func main() {
 		for i := 0; i < len(multiverse); i++ {
 			multiverse[i].Read(gamebuffers[i])
 		}
-	
+
 		runUniverses(multiverse)
 
 		second := (start.UnixNano() / int64(time.Second))
@@ -55,10 +56,23 @@ func main() {
 			print("#", second, " screen=", newFullRefreshes-fullRefreshes, "fps animation=", animationTime.String(), "/", (animationFPS / 10), ".", animationFPS%10, "fps\r\n")
 			fullRefreshes = newFullRefreshes
 		}
+
+		minute := (start.UnixNano() / int64(time.Minute))
+		if minute != restartTime {
+			restartTime = minute
+			resetUniverses(multiverse)
+
+			drawCube()
+			display.Display()
+
+			time.Sleep(time.Second)
+
+			randomizeUniverses(multiverse)
+		}
 	}
 }
 
-func drawCube()	{
+func drawCube() {
 	for i := range multiverse {
 		drawSide(int16(i), multiverse[i], gamebuffers[i])
 	}
@@ -131,4 +145,16 @@ func callMultiTick(wg *sync.WaitGroup, u *game.ParallelUniverse) {
 		u.MultiTick()
 		wg.Done()
 	}()
+}
+
+func resetUniverses(multi []*game.ParallelUniverse) {
+	for _, u := range multi {
+		u.Reset()
+	}
+}
+
+func randomizeUniverses(multi []*game.ParallelUniverse) {
+	for _, u := range multi {
+		u.Randomize(population)
+	}
 }
