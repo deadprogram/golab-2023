@@ -19,21 +19,22 @@ var (
 	gamebuffers [][]byte
 
 	dead  = color.RGBA{0, 0, 0, 255}
-	alive = color.RGBA{0, 255, 0, 255}
+	red   = color.RGBA{255, 0, 0, 255}
+	green = color.RGBA{0, 255, 0, 255}
+	blue  = color.RGBA{0, 0, 255, 255}
+
+	lifecolors  = []color.RGBA{red, green, blue}
+	currentlife = 1
+	alive       = green
 )
 
 func main() {
-	multiverse = createUniverses()
-	connectUniverses(multiverse)
-
-	for i := 0; i < len(multiverse); i++ {
-		gamebuffers = append(gamebuffers, make([]byte, height*width))
-		multiverse[i].Read(gamebuffers[i])
-	}
-
 	fullRefreshes := uint(0)
 	previousSecond := int64(0)
 	restartTime := int64(0)
+
+	multiverse = createUniverses()
+	connectUniverses(multiverse)
 
 	for {
 		start := time.Now()
@@ -68,6 +69,7 @@ func main() {
 			time.Sleep(time.Second)
 
 			randomizeUniverses(multiverse)
+			nextLifeColor()
 		}
 	}
 }
@@ -107,6 +109,8 @@ func createUniverses() []*game.ParallelUniverse {
 		u := game.NewParallelUniverse(height, width)
 		u.Randomize(population)
 		multi = append(multi, u)
+
+		gamebuffers = append(gamebuffers, make([]byte, height*width))
 	}
 
 	return multi
@@ -157,4 +161,9 @@ func randomizeUniverses(multi []*game.ParallelUniverse) {
 	for _, u := range multi {
 		u.Randomize(population)
 	}
+}
+
+func nextLifeColor() {
+	currentlife = (currentlife + 1) % len(lifecolors)
+	alive = lifecolors[currentlife]
 }
