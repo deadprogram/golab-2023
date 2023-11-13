@@ -6,40 +6,47 @@ import (
 	"image/color"
 	"time"
 
-	"tinygo.org/x/drivers/st7735"
-	"tinygo.org/x/tinydraw"
+	"tinygo.org/x/drivers/st7789"
 
 	"github.com/acifani/vita/lib/game"
 )
 
 var (
-	display st7735.Device
+	display st7789.Device
 
 	gamebuffer []byte
 
-	startx int16 = 24
-	starty int16 = 8
-	radius int16 = 2
-	space  int16 = 2
-
-	black = color.RGBA{0, 0, 0, 255}
-	white = color.RGBA{255, 255, 255, 255}
+	bk             = color.RGBA{0, 0, 0, 255}
+	wh             = color.RGBA{255, 255, 255, 255}
+	cellSize int16 = 6
+	cellBuf        = []color.RGBA{
+		wh, wh, wh, wh, wh, wh,
+		wh, wh, bk, bk, wh, wh,
+		wh, bk, bk, bk, bk, wh,
+		wh, bk, bk, bk, bk, wh,
+		wh, wh, bk, bk, wh, wh,
+		wh, wh, wh, wh, wh, wh,
+	}
 )
 
 func startGame() {
-	machine.SPI1.Configure(machine.SPIConfig{
-		SCK:       machine.SPI1_SCK_PIN,
-		SDO:       machine.SPI1_SDO_PIN,
-		SDI:       machine.SPI1_SDI_PIN,
+	machine.SPI0.Configure(machine.SPIConfig{
 		Frequency: 8000000,
+		Mode:      0,
 	})
 
-	display = st7735.New(machine.SPI1, machine.TFT_RST, machine.TFT_DC, machine.TFT_CS, machine.TFT_LITE)
-	display.Configure(st7735.Config{
-		Rotation: st7735.ROTATION_90,
+	display = st7789.New(machine.SPI0,
+		machine.TFT_RST,       // TFT_RESET
+		machine.TFT_WRX,       // TFT_DC
+		machine.TFT_CS,        // TFT_CS
+		machine.TFT_BACKLIGHT) // TFT_LITE
+
+	display.Configure(st7789.Config{
+		Rotation: st7789.ROTATION_270,
+		Height:   320,
 	})
 
-	display.FillScreen(black)
+	display.FillScreen(wh)
 
 	gamebuffer = make([]byte, height*width)
 	universe.Read(gamebuffer)
@@ -57,7 +64,6 @@ func startGame() {
 
 func drawGrid() {
 	var rows, cols uint32
-	c := black
 
 	for rows = 0; rows < height; rows++ {
 		for cols = 0; cols < width; cols++ {
@@ -68,14 +74,11 @@ func drawGrid() {
 				// no change, so skip
 				continue
 			case universe.Cell(idx) == game.Alive:
-				c = white
+				display.FillRectangleWithBuffer(1+cellSize*int16(cols), cellSize*int16(rows), cellSize, cellSize, cellBuf)
 			default: // game.Dead
-				c = black
+				display.FillRectangle(1+cellSize*int16(cols), cellSize*int16(rows), cellSize, cellSize, wh)
 			}
 
-			x := startx + int16(cols)*radius*2 - radius + int16(cols)*space
-			y := starty + int16(rows)*radius*2 - radius + int16(rows)*space
-			tinydraw.FilledCircle(&display, x, y, radius, c)
 		}
 	}
 }

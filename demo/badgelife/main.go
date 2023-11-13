@@ -1,9 +1,9 @@
 package main
 
 import (
-	"time"
+	"machine"
 
-	"tinygo.org/x/drivers/shifter"
+	"time"
 
 	"github.com/acifani/vita/lib/game"
 )
@@ -11,8 +11,8 @@ import (
 var (
 	universe *game.Universe
 
-	height     uint32 = 20
-	width      uint32 = 20
+	height     uint32 = 40
+	width      uint32 = 53
 	population        = 20
 )
 
@@ -22,17 +22,17 @@ func main() {
 
 	go startGame()
 
-	buttons := shifter.NewButtons()
-	buttons.Configure()
+	btnA := machine.BUTTON_A
+	btnB := machine.BUTTON_B
+	btnA.Configure(machine.PinConfig{Mode: machine.PinInput})
+	btnB.Configure(machine.PinConfig{Mode: machine.PinInput})
 
 	for {
-		buttons.ReadInput()
-
-		if buttons.Pins[shifter.BUTTON_A].Get() {
+		if !btnA.Get() {
 			universe.Randomize(population)
 		}
 
-		if buttons.Pins[shifter.BUTTON_B].Get() {
+		if !btnB.Get() {
 			universe.Reset()
 		}
 
