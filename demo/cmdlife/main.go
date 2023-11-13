@@ -10,7 +10,8 @@ import (
 func main() {
 	universe := game.NewUniverse(16, 16)
 	universe.Randomize(45)
-
+	println()
+	
 	for {
 		println("Generation", universe.Generation)
 		println(universe.String())
