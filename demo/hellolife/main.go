@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"os"
 
 	"github.com/acifani/vita/lib/game"
@@ -13,13 +14,13 @@ func main() {
 	println()
 	
 	for {
-		println("Generation", universe.Generation)
-		println(universe.String())
-		println()
+		fmt.Println("Generation", universe.Generation)
+		fmt.Println(universe)
+		fmt.Println()
 
 		universe.Tick()
 
-		println("Press enter to continue")
+		fmt.Println("Press enter to continue...")
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 	}
 }
