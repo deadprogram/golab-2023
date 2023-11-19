@@ -26,19 +26,19 @@ var (
 	lifecolors  = []color.RGBA{red, green, blue}
 	currentlife = 1
 	alive       = green
+
+	fullRefreshes  uint
+	previousSecond int64
+	restartTime    int64
+
+	start = time.Now()
 )
 
 func main() {
-	fullRefreshes := uint(0)
-	previousSecond := int64(0)
-	restartTime := int64(0)
-
 	multiverse = createUniverses()
 	connectUniverses(multiverse)
 
 	for {
-		start := time.Now()
-
 		drawCube()
 		display.Display()
 
@@ -48,29 +48,8 @@ func main() {
 
 		runUniverses(multiverse)
 
-		second := (start.UnixNano() / int64(time.Second))
-		if second != previousSecond {
-			previousSecond = second
-			newFullRefreshes := getFullRefreshes()
-			animationTime := time.Since(start)
-			animationFPS := int64(10 * time.Second / animationTime)
-			print("#", second, " screen=", newFullRefreshes-fullRefreshes, "fps animation=", animationTime.String(), "/", (animationFPS / 10), ".", animationFPS%10, "fps\r\n")
-			fullRefreshes = newFullRefreshes
-		}
-
-		minute := (start.UnixNano() / int64(time.Minute))
-		if minute != restartTime {
-			restartTime = minute
-			resetUniverses(multiverse)
-
-			drawCube()
-			display.Display()
-
-			time.Sleep(time.Second)
-
-			randomizeUniverses(multiverse)
-			nextLifeColor()
-		}
+		displayStatsEverySecond()
+		resetCubeEveryMinute()
 	}
 }
 
@@ -179,4 +158,32 @@ func randomizeUniverses(multi []*game.ParallelUniverse) {
 func nextLifeColor() {
 	currentlife = (currentlife + 1) % len(lifecolors)
 	alive = lifecolors[currentlife]
+}
+
+func displayStatsEverySecond() {
+	second := (start.UnixNano() / int64(time.Second))
+	if second != previousSecond {
+		previousSecond = second
+		newFullRefreshes := getFullRefreshes()
+		animationTime := time.Since(start)
+		animationFPS := int64(10 * time.Second / animationTime)
+		print("#", second, " screen=", newFullRefreshes-fullRefreshes, "fps animation=", animationTime.String(), "/", (animationFPS / 10), ".", animationFPS%10, "fps\r\n")
+		fullRefreshes = newFullRefreshes
+	}
+}
+
+func resetCubeEveryMinute() {
+	minute := (start.UnixNano() / int64(time.Minute))
+	if minute != restartTime {
+		restartTime = minute
+		resetUniverses(multiverse)
+
+		drawCube()
+		display.Display()
+
+		time.Sleep(time.Second)
+
+		randomizeUniverses(multiverse)
+		nextLifeColor()
+	}
 }
