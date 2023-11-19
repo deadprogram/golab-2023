@@ -1,3 +1,5 @@
+.ONESHELL:
+
 camera:
 	go run ./demo/showvideo/main.go 1
 
@@ -23,6 +25,14 @@ hellolife-size:
 	ls -l ./build/hellolife-tinygo ./build/hellolife-go
 
 hellolife: hellolife-biggo
+
+browserlife:
+	cd ~/Development/vita 
+	tinygo build -o ./public/vita.wasm -target wasm -no-debug -panic=trap -opt=s .
+	go run ./serve
+
+hellothings:
+	tinygo flash -size short -target=gopher-badge examples/blinky1
 
 badgelife:
 	tinygo flash -size short -target=gopher-badge ./demo/badgelife/
