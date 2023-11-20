@@ -31,7 +31,7 @@ var (
 	previousSecond int64
 	restartTime    int64
 
-	start = time.Now()
+	start time.Time
 )
 
 func main() {
@@ -39,6 +39,8 @@ func main() {
 	connectUniverses(multiverse)
 
 	for {
+		start = time.Now()
+
 		drawCube()
 		display.Display()
 
