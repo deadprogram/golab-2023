@@ -3,12 +3,11 @@ module github.com/deadprogram/golab-2023
 go 1.21.1
 
 require (
-	github.com/acifani/vita v1.3.0
+	github.com/acifani/vita v1.3.1-0.20231114170321-a31e8d333702
 	github.com/aykevl/ledsgo v0.0.0-20230808203851-4c9b90563294
 	github.com/aykevl/tilegraphics v0.0.0-20191028092025-c4bb79f41363
 	github.com/tinygo-org/things v0.0.0-20231104183617-eae74d138593
 	tinygo.org/x/drivers v0.25.0
-	tinygo.org/x/tinydraw v0.4.0
 )
 
 require (
