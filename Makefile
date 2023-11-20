@@ -37,14 +37,23 @@ hellothings:
 badgelife:
 	tinygo flash -size short -target=gopher-badge ./demo/badgelife/
 
+cubelife:
+	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/cubelife/
+
+cloudlife-up:
+	cd ~/Development/cloudlife
+	~/spin build
+	~/spin up
+
+cloudlife-deploy:
+	cd ~/Development/cloudlife
+	~/spin deploy
+
 cubetest:
 	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/cubetest/
 
 panellife:
 	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/panellife/
-
-cubelife:
-	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/cubelife/
 
 showlife:
 	tinygo flash -size short -target=itsybitsy-m4 -opt=2 ./demo/showlife/
